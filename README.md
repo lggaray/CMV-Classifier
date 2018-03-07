@@ -76,7 +76,7 @@ We tried the following classifiers (descriptions are taken from the scikit-learn
 
 - [AdaBoostClassifier](http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html): An AdaBoost classifier is a meta-estimator that begins by fitting a classifier on the original dataset and then fits additional copies of the classifier on the same dataset but where the weights of incorrectly classified instances are adjusted such that subsequent classifiers focus more on difficult cases.
 
-- [Multi-layer Perceptron classifier](http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier): MLP is a supervised learning algorithm that learns a function $$f(.): R^m \to R^o$$ by training on a dataset, where  $$m$$ is the number of dimensions for input and  $$o$$ is the number of dimensions for output. Given a set of features $$X=x_1,x_2,...,x_m$$ and a target $$y$$ , it can learn a non-linear function approximator for either classification or regression.
+- [Multi-layer Perceptron classifier](http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier): MLP is a supervised learning algorithm that learns a function by training on a dataset. Given a set of features and a target, it can learn a non-linear function approximator for either classification or regression.
 
 ## Evaluation
 
