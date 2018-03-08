@@ -84,14 +84,14 @@ To evaluate the performance of our models, we splitted the dataset in two halves
 
 ![Scores](Classifier_report_scores.png)
 
-We selected the highest-performing feature sets (8, 12 and 13) and the classifiers that achieved the best scores (SVM, AdaBoost and MLP). We then measured overfitting in these models by calling scikit-learn’s cross_val_score[http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html] function, a k-fold cross-validation algorithm for which we chose k=10. We calculated the mean and standard deviation and represented this data with a boxplot.
+We selected the highest-performing feature sets (8, 12 and 13) and the classifiers that achieved the best scores (SVM, AdaBoost and MLP). We then measured overfitting in these models by calling scikit-learn’s [cross_val_score](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html) function, a k-fold cross-validation algorithm for which we chose k=10. We calculated the mean and standard deviation and represented this data with a [boxplot](https://en.wikipedia.org/wiki/Box_plot).
 
 ![Cv](Classifier_report_crossvalidation.png)
 ![Plot1](cv-set8.png)
 ![Plot2](cv-set12.png)
 ![Plot3](cv-set13.png)
 
-The three models are very close in performance. Set 12 is the less prone to overfitting and also achieves the highest accuracy, precision and recall scores with the MLP classifier. However, it is important to note that even though set 8 has the lowest scores, it includes less features and consequently runs a little faster, which makes it a great alternative for certain applications. 
+The three models are very close in performance. Set 12 achieves the highest accuracy and recall scores and very high precision with the MLP classifier. It is also the least prone to overfitting. We could conclude then that this is the best model. However, it is necessary to evaluate the particular use of the classifier to select a winner. Even though set 8 has the lowest scores, it includes less features and consequently runs a little faster, which makes it a great alternative when caring about efficiency. If high precision was a requirement, then set 13 could be considered the best option, since it achieves the highest precision score. 
 
 ## References
 
