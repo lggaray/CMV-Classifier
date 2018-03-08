@@ -1,9 +1,20 @@
 # Identifying argumentative relations on Reddit CMV
 
+## Authors
+
+Guadalupe Romero - Computational linguist
+
+contact: guadi<span>1994@</span>gmail.com
+
+<br />
+
+Lucas Garay - Computer Science student
+
+contact: lucasgaray<span>095@</span>gmail.com
+
 ## Introduction
 
 The goal of this project is to build a classifier that identifies attack and support argumentative relations between pairs of comments in online debates. We used the [Change My View (CMV) subreddit](https://www.reddit.com/r/changemyview/) as a corpus. We chose this forum because its content is mainly argumentative and because it is ruled by guidelines that make the construction of a dataset easier.
-
 
 ## Data structure
 
