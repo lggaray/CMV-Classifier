@@ -208,16 +208,16 @@ noSubmissions = "number of submissions" + " " +str(number_of_submissions)
 '''
 pickling time!
 '''
-data_pickle = Path('data')
+data_pickle = Path('info')
 if data_pickle.is_file():
-    with open('data', 'rb') as f:
+    with open('info', 'rb') as f:
         datos = pickle.load(f)
 else:
     datos = defaultdict(list)
 
 datos["top"] = [nCountDelta, pCountRules, noSubmissions]
 
-with open('data', 'wb') as f:
+with open('info', 'wb') as f:
     pickle.dump(datos, f)
 
 with open('pos_rules_ex_top', 'wb') as f:
@@ -226,5 +226,5 @@ with open('pos_rules_ex_top', 'wb') as f:
 with open('neg_delta_ex_top', 'wb') as f:
     pickle.dump(delta_neg, f)
 
-with open('neg_rules_ex_controversial', 'wb') as f:
+with open('neg_rules_ex_top', 'wb') as f:
     pickle.dump(neg_rules_ex, f)
