@@ -4,15 +4,6 @@
 
 The goal of this project is to build a classifier that identifies attack and support argumentative relations between pairs of comments in online debates. We used the [Change My View (CMV) subreddit](https://www.reddit.com/r/changemyview/) as a corpus. We chose this forum because its content is mainly argumentative and because it is ruled by guidelines that make the construction of a dataset easier.
 
-## Dataset
-
-According to one of the [subreddit's rules](https://www.reddit.com/r/changemyview/wiki/rules), "direct responses to a CMV post must challenge at least one aspect of OP’s current view." Based on this assumption, we extracted all the post and first-level comment tuples and labeled them as positive. We got 31580 positive examples.
-
-We were able to spot a significant number of support relations thanks to the [Delta System](https://www.reddit.com/r/changemyview/wiki/deltasystem), a set of rules that encourages users to reply to comments that changed their view with a delta symbol and an explanation of the change. This explanation can thus be considered to be in a support relation to its parent. Whenever someone awards a delta, a [DeltaBot](https://www.reddit.com/r/changemyview/wiki/deltasystem#wiki_deltabot_code) ensures that the rules are being followed and confirms the award. We identified 4262 negative tuples with this method. However, due to bugs in the DeltaBot, a large number of examples weren't correct. We filtered non-support tuples by eliminating those that didn't contain the word "delta" or a delta symbol in the child. We were left with 1841 tuples.
-
-In addition, we extracted 846 tuples that mentioned support keywords or phrases like "i agree", "that's true" and "see your point" in the child. We then hand-labeled 148 of this candidate tuples as negative.
-
-As the number of positive examples was a lot larger than the number of negative ones, we undersampled the positive dataset to 1989 tuples.
 
 ## Data structure
 
@@ -27,6 +18,16 @@ Then we sanitized the data, leaving only alphanumeric characters and dots. We re
 After cleansing, we ran DFS for each submission to get the full path, starting from the root and ending at the leaves (last comments) of each thread.
 
 For each thread, we took all the possible pairs of parent-child combinations. We repeated this process for each [CMV category](https://praw.readthedocs.io/en/latest/getting_started/quick_start.html#obtain-submission-instances-from-a-subreddit).
+
+## Dataset
+
+According to one of the [subreddit's rules](https://www.reddit.com/r/changemyview/wiki/rules), "direct responses to a CMV post must challenge at least one aspect of OP’s current view." Based on this assumption, we extracted all the post and first-level comment tuples and labeled them as positive. We got 31580 positive examples.
+
+We were able to spot a significant number of support relations thanks to the [Delta System](https://www.reddit.com/r/changemyview/wiki/deltasystem), a set of rules that encourages users to reply to comments that changed their view with a delta symbol and an explanation of the change. This explanation can thus be considered to be in a support relation to its parent. Whenever someone awards a delta, a [DeltaBot](https://www.reddit.com/r/changemyview/wiki/deltasystem#wiki_deltabot_code) ensures that the rules are being followed and confirms the award. We identified 4262 negative tuples with this method. However, due to bugs in the DeltaBot, a large number of examples weren't correct. We filtered non-support tuples by eliminating those that didn't contain the word "delta" or a delta symbol in the child. We were left with 1841 tuples.
+
+In addition, we extracted 846 tuples that mentioned support keywords or phrases like "i agree", "that's true" and "see your point" in the child. We then hand-labeled 148 of this candidate tuples as negative.
+
+As the number of positive examples was a lot larger than the number of negative ones, we undersampled the positive dataset to 1989 tuples.
 
 ## Feature engineering
 
@@ -46,7 +47,7 @@ We built this initial set of features:
 
 - **Attack keywords.** We also curated a list of attack keywords and phrases and looked for them in the child.
 
-- **Contrast rule.** We spot a frequent support structure in the children, so we created a rule to detect all the strings that followed a support keyword + optional string + contrast discourse marker pattern (e.g., “i agree with your points but…”).
+- **Contrast rule.** We spotted a frequent support structure in the children, so we created a rule to detect all the strings that followed a support keyword + optional string + contrast discourse marker pattern (e.g., “i agree with your points but…”).
 
 - **N-gram overlap.** Following the intuition that comments in a support relation are more similar to each other, we computed document similarity via n-gram overlap. We searched for the overlapping of 1-grams, 2-grams and 3-grams between parent and child.
 
@@ -92,6 +93,12 @@ We selected the highest-performing feature sets (8, 12 and 13) and the classifie
 ![Plot3](cv-set13.png)
 
 The three models are very close in performance. Set 12 achieves the highest accuracy and recall scores and very high precision with the MLP classifier. It is also the least prone to overfitting. We could conclude then that this is the best model. However, it is necessary to evaluate the particular use of the classifier to select a winner. Even though set 8 has the lowest scores, it includes less features and consequently runs a little faster, which makes it a great alternative when caring about efficiency. If high precision was a requirement, then set 13 could be considered the best option, since it achieves the highest precision score. 
+
+## Conclusion
+
+After trying different configurations of features, we can observe that the ones that perform best for identifying argumentative relations are modals, discourse markers, verbs and first and last words of the child. Similarity measures like n-gram overlap and word embedding contribute to reducing overfitting, while attack and support keywords increase precision. Regarding classifiers, the ones that perform best are SVM and MLP.
+
+Reddit is a carefully curated forum, with strict rules and a community that writes mainly standard English. For this reason, our classifier may not adjust so well to less regular texts. Future improvements in our model could be made by selecting better features. We could craft new features after doing error analysis of misclassified examples, validate all the feature sets instead of just some of them, or automatize this process via feature selection. We could also do hyperparameter optimization to choose the best parameter values for our model. Finally, we could define a threshold to filter low confidence predictions.
 
 ## References
 
