@@ -8,7 +8,7 @@ contact: guadi<span>1994@</span>gmail.com
 
 <br />
 
-Lucas Garay - Computer Science student
+Lucas Garay - Computer Scientist
 
 contact: lucasgaray<span>095@</span>gmail.com
 
